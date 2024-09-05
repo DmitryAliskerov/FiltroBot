@@ -10,7 +10,94 @@
     <meta name="robots" content="noindex,nofollow" />
     <script src="https://telegram.org/js/telegram-web-app.js?2"></script>
     <title></title>
+<script> 
+  const currentQuery = new URLSearchParams(document.location.search);
+
+  class QueryParamOutput extends HTMLElement {
+    constructor() { 
+      super(); 
+    }
+    connectedCallback() { 
+      let paramName = this.getAttribute("name")
+      this.textContent = currentQuery.get(paramName); 
+    }
+  };
+
+  customElements.define("output-query-param", QueryParamOutput);
+
+  const dataStub = {channels: [
+    {id: -1001101170442, name: "РИА Новости", description: "Главные Новости РИА", tags: ["Новости"]},
+    {id: -1001708761316, name: "Прямой Эфир • Новости", description: "Все самое важное в одном канале. Новости России и Мира", tags: ["Новости"]}
+  ]}
+
+	document.addEventListener("DOMContentLoaded", function(event) { 
+		form = document.getElementById("form1")
+		for (var i = 0; i < dataStub.channels.length; i++) {
+			var channel = dataStub.channels[i];
+
+			var para = document.createElement("p");
+
+			var input = document.createElement("input");
+			input.setAttribute("type", "checkbox");
+			input.setAttribute("channel_id", channel.id);
+
+			var label = document.createElement("label");
+			label.innerHTML = channel.name;
+
+			var br = document.createElement("br");
+
+			var desc = document.createElement("i");
+			desc.style.cssText = 'margin-left: 25px';
+			desc.innerHTML = channel.description;
+
+			para.appendChild(input);
+			para.appendChild(label);
+			para.appendChild(br);
+			para.appendChild(desc);
+
+			form.appendChild(para);
+		}
+
+		var submit = document.createElement("input");
+		submit.setAttribute("type", "submit");
+		submit.setAttribute("value", "Сохранить");
+
+		form.appendChild(submit);
+	});
+
+  const App = {
+	init(options) {
+		Telegram.WebApp.ready()
+	},
+
+	save(form, event) {
+            event.preventDefault();
+
+	    var checkboxes = document.querySelectorAll("input[type=checkbox]");
+
+	    var channels = []
+	    for (i = 0; i < checkboxes.length; ++i) {
+	        var checkbox = checkboxes[i] 
+		if (checkbox.checked) {
+			channels.push(checkbox.getAttribute("channel_id"))
+		}
+	    };
+
+	    let data = {
+                "channels": channels
+	    };
+
+	    Telegram.WebApp.sendData(JSON.stringify(data));
+	}
+  };
+
+  App.init();
+
+</script>
+
 <body>
-	ASD
+	<form id="form1" onsubmit="App.save(this, event);">
+
+	</form>
 </body>
 </html>
