@@ -16,12 +16,12 @@
 </head>
 <body>
 	<div id="app">
-		<div v-if="loading">Loading...</div>
+		<div v-if="loading">{{status}}</div>
 		<div v-else>
-			<form id="form1" onsubmit="App.save(this, event);">
+			<form v-on:submit="save" >
 				<div class="" v-for="result in results">
 					<p>
-						<input type="checkbox"  :checked="result[3]" :chat_id="result[0]" />
+						<input type="checkbox" v-model="result[3]" :chat_id="result[0]" />
 						<label>{{result[2]}}</label>
 					</p>
 				</div>
@@ -31,7 +31,8 @@
 		</div>
 	</div>
 
-	<script src="getUrl.js"></script>
+	<script src="baseUrl.js"></script>
+	<script src="getParams.js"></script>
 	<script src="vueApp.js"></script>
 </body>
 </html>
