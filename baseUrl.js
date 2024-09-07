@@ -1,1 +1,1 @@
-const base_url = "http://localhost:5000/user_channels/"
+const base_url = "https://filtrobot-bot.onrender.com/user_channels/"
