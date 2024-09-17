@@ -1,6 +1,7 @@
 const vm = new Vue({
 	el: '#app',
 	data: {
+		search: '',
 		loading: true,
 		status: "Loading...",
 		results: []
@@ -17,12 +18,14 @@ const vm = new Vue({
 			}))
 		}
 	},
+	computed: {
+		filteredResults() {
+			return this.results.filter(item => {
+				return item[2].toLowerCase().indexOf(this.search.toLowerCase()) > -1
+			})
+		}
+	},
 	mounted() {
-		//this.results = [[-1001101170442, 'rian_ru', 'РИА Новости 1', true], [-1001101170443, 'rian_ru', 'РИА Новости 2', true]]
-		//this.origin = this.results.map(a => Object.assign({}, a))
-		//this.loading = false
-		//return
-
 		axios
 			.get(base_url + user_id)
 			.then(response => {
