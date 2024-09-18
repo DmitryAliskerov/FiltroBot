@@ -44,7 +44,7 @@ const vm = new Vue({
 		axios
 			.get(base_url + user_id)
 			.then(response => {
-				this.results = response.data.results
+				this.results = response.data.chats
 				this.origin = this.results.map(a => Object.assign({}, a))
 				this.selectedSortOption = response.data.sortOption
 				this.loading = false
