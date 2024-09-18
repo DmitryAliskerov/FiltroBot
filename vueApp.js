@@ -46,7 +46,7 @@ const vm = new Vue({
 			.then(response => {
 				this.results = response.data.chats
 				this.origin = this.results.map(a => Object.assign({}, a))
-				this.selectedSortOption = response.data.sortOption
+				this.selectedSortOption = response.data.sortOption[0]
 				this.loading = false
 			})
 			.catch(error => {
