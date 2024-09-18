@@ -12,24 +12,81 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="telegramApp.js"></script>
+<style>
+.section {
+  .t1 {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .t2 {
+    margin-left: 20px;
+  }
+
+  .channel-list {
+    overflow-y: auto;
+    height: auto;
+    max-height: 300px;
+  }
+
+  .sort-options {
+    margin-top: 5px;
+  }
+}
+
+.submit {
+  margin-top:125px;
+}
+
+</style>
+
 </head>
 <body>
 	<div id="app">
 		<div v-if="loading">{{status}}</div>
 		<div v-else>
 			<form v-on:submit="save" >
-				<div>Фильтр</br>
-					<input type="text" v-model="search">
-				</div>
-				<div class="" v-for="result in filteredResults">
-					<p>
-						<input type="checkbox" v-model="result[3]" :chat_id="result[0]" />
-						<label>{{result[2]}}</label>
-					</p>
+				<div class="section">
+					<div class="t1">
+						<label >Каналы</label>
+					</div>
+
+					<div class="t2">
+						<div>Фильтр</br>
+							<input type="text" v-model="search">
+						</div>
+
+						<div class="channel-list">
+							<div v-for="result in filteredResults">
+								<p>
+									<input type="checkbox" v-model="result[3]" :chat_id="result[0]" />
+									<label>{{result[2]}}</label>
+								</p>
+							</div>
+						</div>
+					</div>
 				</div>
 
-				<input type="submit" value="Сохранить" />
+				<div class="section">
+					<div class="t1">
+						<label >Сообщения</label>
+					</div>
+
+					<div class="t2">
+						<div>Сортировка</br>
+							<select class="sort-options" v-model="selectedSortOption">
+								<option v-for="item in sortOptions" :value="item.id">
+									{{ item.val }}
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<input class="submit" type="submit" value="Сохранить" />
 			</form>
+
+
 			<div style="color: grey; float: right; position: fixed; bottom: 0; right: 0; padding: 5px;"></br></br>Version 0.01</div>
 		</div>
 	</div>
