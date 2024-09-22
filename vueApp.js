@@ -23,7 +23,8 @@ const vm = new Vue({
 					"user_id": user_id,
 					"chat_ids_to_delete": diff.filter(x => !x[3]).map(x => x[0]),
 					"chat_ids_to_insert": diff.filter(x => x[3]).map(x => x[0]),
-					"sort_option": this.selectedSortOption
+					"sort_option": this.selectedSortOption,
+					"tz_offset": new Date().getTimezoneOffset()
 			}))
 		}
 	},
