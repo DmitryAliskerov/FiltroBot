@@ -34,10 +34,16 @@ const vm = new Vue({
 				return item[2].toLowerCase().indexOf(this.search.toLowerCase()) > -1
 			})
 
-			return _(filteredData).groupBy(x => x[5]).map((value, key) => ({"theme": key, "chats": value})).value()
+			return _(filteredData).groupBy(x => x[1]).map((value, key) => ({"theme": key, "chats": value})).value()
 		}
 	},
 	mounted() {
+/*
+		this.results = [[-1001101170442, 'rian_ru', 'РИА Новости 1', true, 'Desc 1', 'Theme 2'], [-1001101170443, 'rian_ru', 'РИА Новости 2', true, 'Desc 2', 'Theme 2'], [-1001101170442, 'rian_ru', 'РИА Новости 3', true, 'Desc 1', 'Theme 1'], [-1001101170443, 'rian_ru', 'РИА Новости 4', true, 'Desc 2', 'Theme 1']]
+		this.origin = this.results.map(a => Object.assign({}, a))
+		this.loading = false
+		return
+*/
 		axios
 			.get(base_url + user_id)
 			.then(response => {
